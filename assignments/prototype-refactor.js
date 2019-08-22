@@ -9,6 +9,16 @@ Prototype Refactor
 */
 
 /*
+  Object oriented design is commonly used in video games.  For this part of the assignment you will be implementing several constructor functions with their correct inheritance hierarchy.
+
+  In this file you will be creating three constructor functions: GameObject, CharacterStats, Humanoid.  
+
+  At the bottom of this file are 3 objects that all end up inheriting from Humanoid.  Use the objects at the bottom of the page to test your constructor functions.
+  
+  Each constructor function has unique properties and methods that are defined in their block comments below:
+*/
+  
+/*
   === GameObject ===
   * createdAt
   * name
@@ -16,15 +26,17 @@ Prototype Refactor
   * destroy() // prototype method that returns: `${this.name} was removed from the game.`
 */
 
-function GameObject(attributes){
-    this.createdAt = attributes.createdAt;
-    this.name = attributes.name;
-    this.dimensions = attributes.dimensions;
-  };
+class GameObject{
+    constructor(attributes){
+      this.createdAt = attributes.createdAt;
+      this.name = attributes.name;
+      this.dimensions = attributes.dimensions;
+    };
+    destroy(){
+      return `${this.name} was removed from the game.`; 
+    }
+  }
   
-  GameObject.prototype.destroy = function(){
-    return `${this.name} was removed from the game.`;
-  };
   
   /*
     === CharacterStats ===
@@ -33,16 +45,16 @@ function GameObject(attributes){
     * should inherit destroy() from GameObject's prototype
   */
   
-  function CharacterStats(attributes){
-    GameObject.call(this, attributes)
-    this.healthPoints = attributes.healthPoints;
+  class CharacterStats extends GameObject{
+    constructor(attributes){
+      super(attributes);
+      this.healthPoints = attributes.healthPoints;
+    };
+    takeDamage(){
+      return `${this.name} took damage.`;
+    }
   }
-  
-  CharacterStats.prototype = Object.create(GameObject.prototype);
-  
-  CharacterStats.prototype.takeDamage = function(){
-    return `${this.name} took damage.`;
-  }
+  //CharacterStats.prototype = Object.create(GameObject.prototype);
   
   /*
     === Humanoid (Having an appearance or character resembling that of a human.) ===
@@ -54,18 +66,18 @@ function GameObject(attributes){
     * should inherit takeDamage() from CharacterStats
   */
   
-  function Humanoid(attributes){
-    CharacterStats.call(this, attributes)
-    this.team = attributes.team;
-    this.weapons = attributes.weapons;
-    this.language = attributes.language;
-  };
-  
-  Humanoid.prototype = Object.create(CharacterStats.prototype);
-  
-  Humanoid.prototype.greet = function(){
-    return `${this.name} offers a greeting in ${this.language}.`;
+  class Humanoid extends CharacterStats{
+    constructor(attributes){
+      super(attributes);
+      this.team = attributes.team;
+      this.weapons = attributes.weapons;
+      this.language = attributes.language;
+    };
+    greet(){
+      return `${this.name} offers a greeting in ${this.language}.`;
+    }
   }
+  
    
   /*
     * Inheritance chain: GameObject -> CharacterStats -> Humanoid
@@ -83,7 +95,7 @@ function GameObject(attributes){
         width: 1,
         height: 1,
       },
-      healthPoints: 5,
+      healthPoints: 15,
       name: 'Bruce',
       team: 'Mage Guild',
       weapons: [
@@ -136,4 +148,5 @@ function GameObject(attributes){
     console.log(archer.greet()); // Lilith offers a greeting in Elvish.
     console.log(mage.takeDamage()); // Bruce took damage.
     console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
+  
   
