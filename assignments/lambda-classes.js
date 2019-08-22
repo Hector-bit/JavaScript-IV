@@ -17,7 +17,7 @@ class Instructor extends Person{
         this.catchPhrase = instructor_att.catchPhrase;
     }
     demo(){
-        return `Today we are learning about ${this.specialty}.`
+        return `Today we are learning about ${this.specialty}.`;
     }
     grade(){
         return `${this.name} recieves a perfect score on ${this.specialty}`;
@@ -32,15 +32,18 @@ class Student extends Person{
         this.favSubjects = student_att.favSubjects;
     }
     listsSubjects(){
-        this.favSubjects.array.forEach(element => {
-            for(let i = 0; i < array.length; i++){
-                return array[i];
+        this.favSubjects.forEach(element => {
+            for(let i = 0; i < element.length; i++){
+                return element[i];
             }
         });
         return this.favSubjects;
     }
     PRAssignments(){
-        return `${this.name} has submitted a PR for ${this.specialty}.`
+        return `${this.name} has submitted a PR for ${this.favSubjects[0]}.`;
+    }
+    sprint(){
+      return `${this.name} has begun sprint challenge on ${this.favSubjects[1]}`;
     }
 }
 
@@ -51,12 +54,12 @@ class Project_Manager extends Instructor{
         this.favInstructor = project_att.favInstructor;
     }
     standUp(){
-        return `${this.name} announces to WEB23, @WEB23 standby times!`
+        return `${this.name} announces to WEB23, @WEB23 standby times!`;
     }
     debugCode(){
-        return `${this.name} debugs ${student.name}'s code on ${student.favSubjects}.`;
+        return `${this.name} debugs ${dean.name}'s code on ${dean.favSubjects[2]}.`;
     }
-}
+};
 
 // The Instructors
 
@@ -89,16 +92,50 @@ const dean = new Student({
   favSubjects: ['Writing', 'Reading', 'Creative writing']
 });
 
-const dean = new Student({
-  name: 'Dean',
-  location: 'Texas',
-  age: 19,
-  previousBackground: 'English Major',
-  className: 'Web100',
-  favSubjects: ['Writing', 'Reading', 'Creative writing']
+const mike = new Student({
+  name: 'Mike',
+  location: 'Colorado',
+  age: 21,
+  previousBackground: 'BioChem Major',
+  className: 'Web102',
+  favSubjects: ['Chemistry', 'Math', 'Robotics']
 });
 
-console.log(fred.catchPhrase);
-console.log(stan.demo());
+const sofia = new Student({
+  name: 'Sofia',
+  location: 'Minnisota',
+  age: 25,
+  previousBackground: 'Mechanical Engineer Major',
+  className: 'Web106',
+  favSubjects: ['Robotics', 'Calculus', 'Statistics']
+});
 
-console.log(dean.name);
+// Project Managers 
+
+const roger = new Project_Manager({
+  name: 'Roger',
+  location: 'Quebec',
+  age: 30,
+  gradClassName: 'CS12',
+  favInstructor: 'Mitchel',
+});
+
+const miguel = new Project_Manager({
+  name: 'Miguel',
+  location: 'Colorado',
+  age: 40,
+  gradClassName: 'IOS2',
+  favInstructor: 'Daniel',
+});
+
+console.log(fred.speak()); //test
+
+console.log(fred.demo());
+console.log(stan.grade());
+
+console.log(dean.listsSubjects());
+console.log(mike.sprint());
+console.log(sofia.PRAssignments());
+
+console.log(miguel.standUp());
+console.log(roger.debugCode());
